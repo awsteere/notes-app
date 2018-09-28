@@ -10,6 +10,10 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>NotesApp</servlet-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/api/notes</url-pattern>
   </servlet-mapping>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error404.html</location>
+  </error-page>
 </web-app>
