@@ -54,11 +54,16 @@ public class NotesAppServlet extends HttpServlet {
         String id = request.getPathInfo();
         System.out.println(String.format("id='%s'", id));
         if (id == null) {
-            List<Note> notes = noteService.getAll();
+            String query = request.getParameter("query");
+            List<Note> notes = noteService.getAll(query);
             response.getWriter().println(objectMapper.writeValueAsString(notes));
         } else {
             Note note = getNote(id);
-            response.getWriter().println(objectMapper.writeValueAsString(note));
+            if (note == null) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            } else {
+                response.getWriter().println(objectMapper.writeValueAsString(note));
+            }
         }
     }
 

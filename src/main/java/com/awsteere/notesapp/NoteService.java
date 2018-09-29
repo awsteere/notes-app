@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class NoteService {
     private final int maxLength;
@@ -41,7 +42,13 @@ public class NoteService {
         return newNote;
     }
 
-    public List<Note> getAll() {
-        return new ArrayList<Note>(notes.values());
+    public List<Note> getAll(String query) {
+        if (query == null) {
+            return new ArrayList<Note>(notes.values());
+        }
+
+        return notes.values().stream()
+                .filter(note -> note.getBody().contains(query))
+                .collect(Collectors.toList());
     }
 }
