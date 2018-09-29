@@ -8,19 +8,26 @@
     <name>notesapp Maven Webapp</name>
 
     <properties>
+        <jacksonVersion>2.9.7</jacksonVersion>
+        <javaxServletVersion>4.0.1</javaxServletVersion>
+        <jettyVersion>9.4.11.v20180605</jettyVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.9</maven.compiler.source>
         <maven.compiler.target>1.9</maven.compiler.target>
-        <jettyVersion>9.4.11.v20180605</jettyVersion>
         <mavenPlugin>1.6.0</mavenPlugin>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
+            <version>${javaxServletVersion}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jacksonVersion}</version>
         </dependency>
     </dependencies>
 
