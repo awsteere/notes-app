@@ -51,7 +51,7 @@ public class NotesService {
     public Note find(String id) {
         try {
             UUID uuid = UUID.fromString(id.replace("/", ""));
-            return notes.get(id);
+            return notes.get(uuid);
         } catch (IllegalArgumentException e) {
             // Ask the PM/Lead/Architect if we need to be more specific
             // with the error message and HTTP status code.
