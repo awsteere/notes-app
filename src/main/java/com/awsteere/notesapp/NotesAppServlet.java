@@ -12,38 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * TODO:
- * 1. Document classes and pom.xml
- * 2. Use JAX-RS and annotations
- * convert to gradle
- * integration tests
- * handle 127.0.0.1:8080/ - error.html
- * -- https://wiki.eclipse.org/Jetty/Howto/Custom_Error_Pages#Define_error_pages_in_web.xml
- * logging
- * Test
- * POST
- * - invalid object: No value for a name, names other than body, embedded "
- * - valid input object, creates note with unique UUID, valid response
+ * Servlet to handle GET and POST of notes. 
  *
- * GET
- * - No arguments return empty json if no notes
- * - Gets all notes if there are more than 0
- * - Get id: UUID - returns note if found, else error
- * - test with extra path api/notes/{uuid}/foo/bar
- * - test multi-line body
- * - test max length body
- * - test empty and blank body
- * Scaling, multi-user, injection for testability
+ * For expediency, not using JAX-RS.
  */
 public class NotesAppServlet extends HttpServlet {
     private static final String contentType = "application/json";
-    private final NoteService noteService;
+    private final NoteService notesService;
     private final ObjectMapper objectMapper;
 
     public NotesAppServlet() {
         super();
 
-        noteService = new NoteService(20);
+        notesService = new NotesService();
         objectMapper = new ObjectMapper();
     }
 
@@ -52,30 +33,30 @@ public class NotesAppServlet extends HttpServlet {
         response.setContentType(contentType);
         response.setStatus(HttpServletResponse.SC_OK);
         String id = request.getPathInfo();
-        System.out.println(String.format("id='%s'", id));
         if (id == null) {
             String query = request.getParameter("query");
-            List<Note> notes = noteService.getAll(query);
-            response.getWriter().println(objectMapper.writeValueAsString(notes));
+            List<Note> notes = notesService.getAll(query);
+            response.getWriter().println(objectMapper
+		.writerWithDefaultPrettyPrinter()
+		.writeValueAsString(notes));
         } else {
             Note note = getNote(id);
             if (note == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             } else {
-                response.getWriter().println(objectMapper.writeValueAsString(note));
+                response.getWriter().println(prettyPrint(note));
             }
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    protected void doPost(HttpServletRequest request, 
+	                  HttpServletResponse response) throws IOException {
         response.setContentType(contentType);
         response.setStatus(HttpServletResponse.SC_OK);
 
         String body = getBodyAsString(request);
-        System.out.println(String.format("body='%s'", body));
-        Note note = postNote(body);
-        response.getWriter().println(objectMapper.writeValueAsString(note));
+        Note note = addNote(body);
+        response.getWriter().println(prettyPrint(note));
     }
 
     private String getBodyAsString(HttpServletRequest request) throws IOException {
@@ -89,13 +70,18 @@ public class NotesAppServlet extends HttpServlet {
         return jb.toString();
     }
 
-    private Note postNote(String body) throws IOException {
+    private Note addNote(String body) throws IOException {
         Note note = objectMapper.readValue(body, Note.class);
-        return noteService.add(note);
+        return notesService.add(note);
     }
 
     private Note getNote(String id) {
         UUID uuid = UUID.fromString(id.replace("/", ""));
-        return noteService.find(uuid);
+        return notesService.find(uuid);
+    }
+
+    private String prettyPrint(Note note) {
+        return objectMapper.writerWithDefaultPrettyPrinter()
+            .writeValueAsString(note));
     }
 }

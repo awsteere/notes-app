@@ -8,14 +8,13 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-public class NoteService {
-    private final int maxLength;
+public class NotesService {
+    private final int maxLength = 1024;
 
     /* UUID is thread safe see: https://stackoverflow.com/questions/7212635/is-java-util-uuid-thread-safe */
     private ConcurrentHashMap<UUID, Note> notes;
 
-    public NoteService(int maxLength) {
-        this.maxLength = maxLength;
+    public NotesService() {
         notes = new ConcurrentHashMap<UUID, Note>();
     }
 
