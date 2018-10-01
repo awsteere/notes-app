@@ -25,7 +25,7 @@ I switched to learning Angular 6. Lacking time, I backed out the integration tes
 above for testing.
 
 ## Validate functionality using curl
-### Validate GET with no notes
+### Validate GET with no notes created
 `curl -s -i -H "Content-Type: application/json" -X GET http://localhost:80/api/notes`
 
 ### Validate GET with an invalid note id
@@ -36,7 +36,7 @@ above for testing.
 `curl -s -i -H "Content-Type: application/json" -X POST http://localhost:80/api/notes -d '{"body" : "Pick up milk!"}'`
 `curl -s -i -H "Content-Type: application/json" -X POST http://localhost:80/api/notes -d '{"body" : "Pick up mess!"}'`
 
-### Validate GETs the notes
+### Validate GETs the all the notes
 `curl -s -i -H "Content-Type: application/json" -X GET http://localhost:80/api/notes`
 
 Save the note id for the next test.
@@ -51,6 +51,8 @@ Save the note id for the next test.
 `curl -s -i -H "Content-Type: application/json" -X GET http://localhost:80/api/notes/query='up%20milk`
 
 ## Known issues
+
+There is a warning in the maven compile: `[WARNING] Unknown asm implementation version, assuming version 393216`.
 
 There is a warning in the console log when an invalid note id is processed: `[WARNING] Error page loop /error404.html`.
 
