@@ -18,7 +18,13 @@ Run `mvn compile`.
 
 Run `mvn jetty:run -Djetty.http.port=80`.
 
-### Validate functionality using curl
+## Unit and Integration Tests :-(
+
+I regret that unit and integration tests were not written due to a lack of time. Upon completing the server code,
+I switched to learning Angular 6. Lacking time, I backed out the integration tests and relied on the curl tests
+above for testing.
+
+## Validate functionality using curl
 ### Validate GET with no notes
 `curl -s -i -H "Content-Type: application/json" -X GET http://localhost:80/api/notes`
 
@@ -43,12 +49,6 @@ Save the note id for the next test.
 
 ### Validate query with whitespace returns valid results
 `curl -s -i -H "Content-Type: application/json" -X GET http://localhost:80/api/notes/query='up%20milk`
-
-## Unit and Integration Tests :-(
-
-I regret that unit and integration tests were not written due to a lack of time. Upon completing the server code,
-I switched to learning Angular 6. Lacking time, I backed out the integration tests and relied on the curl tests
-above for testing.
 
 ## Known issues
 
