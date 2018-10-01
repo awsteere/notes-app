@@ -8,16 +8,22 @@
     <name>notesapp Maven Webapp</name>
 
     <properties>
+        <apacheCommonsTextVersion>1.4</apacheCommonsTextVersion>
         <jacksonVersion>2.9.7</jacksonVersion>
         <javaxServletVersion>4.0.1</javaxServletVersion>
         <jettyVersion>9.4.11.v20180605</jettyVersion>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.9</maven.compiler.source>
         <maven.compiler.target>1.9</maven.compiler.target>
         <mavenPlugin>1.6.0</mavenPlugin>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>${apacheCommonsTextVersion}</version>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

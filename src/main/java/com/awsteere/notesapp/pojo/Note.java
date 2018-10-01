@@ -6,13 +6,19 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.util.UUID;
 
+/**
+ * Note data object/POJO. Any behavior should be in the {@NotesService}.
+ *
+ * @author Andy Steere
+ */
 public class Note {
     @JsonProperty(required = false)
     private UUID id;
 
     private String body;
 
-    public Note() { }
+    public Note() {
+    }
 
     public Note(String body) {
         id = UUID.randomUUID();
@@ -38,4 +44,5 @@ public class Note {
     public void setBody(String body) {
         this.body = body;
     }
+
 }
